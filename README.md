@@ -1,4 +1,4 @@
-# SKLEP IN PROGRESS
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Znak_graficzny_AGH.svg/1200px-Znak_graficzny_AGH.svg.png" style="width:200px"/>
 <h2> Sklep Internetowy </h2>
 <h3>Przyczyna</h3> Projektujemy oprogramowanie sklepu internetowego na ćwiczenia z Projektowania Oprogramowania.
 <h3>Kompilator</h3> Wykorzystamy do kodowania program <b>Visual Studio 2019</b>, który został nam udostępniony przez naszą uczelnię <b><mark>AGH</mark></b> (niestety nie chce ona nam zapewnić wtyczki <mark>.NET</mark>), a także, we własnym zakresie <b>Visual Studio 2022</b>.
