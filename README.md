@@ -8,16 +8,17 @@
 Sklep jest podzielony na dwie części, będzie miał widok użytkownika (<b>Klient</b>) i administratora (<b>Admin</b>).
 <ul>
   <li><b>Klient</b> będzie mógł przeglądać i zamawiać produkty dostępne w sklepie, a także zarządzać swoim koszykiem.</li>
-  <li><b>Admin</b> będzie miał możliwość wprowadzania i usuwania produktów z magazynu i zarządzania wysyłką produktów.</li>
+  <li><b>Admin</b> będzie miał możliwość wprowadzania i usuwania produktów z magazynu, edytowania ich specyfikacji, zarządzania wysyłką produktów i dokumentowania zakupu.</li>
 </ul>
 
 <h2> Co ciekawego dodamy </h2>
 <ul>
-  <li>Możliwość zarejestrowania i zalogowania się; </li>
-  <li>Filtry produktów w widoku przeglądania produktów;</li>
-  <li>Możliwość wyboru kilku różnych metod płatności;</li>
+  <li>Możliwość <b>zarejestrowania</b> i <b>zalogowania się</b>; </li>
+  <li><b>Filtry</b> produktów w widoku przeglądania produktów;</li>
+  <li>Możliwość wyboru kilku różnych <b>metod płatności</b>;</li>
   <li>Na potrzeby demonstracji - prototyp banku (chyba).</li>
 </ul>
+<i>Uwaga: w naszym sklepie dopiero dokonanie płatności ściąga produkt z listy dostępnych, nie samo dodanie do koszyka</i>
 
 <h2> Twórcy </h2>
 <ul>
