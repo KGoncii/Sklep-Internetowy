@@ -1,4 +1,4 @@
-<img src="https://www.agh.edu.pl/home/ckim/multimedia/znak_graficzny/znak_nazwa_symetr/agh_nzw_s_pl_1w_wbr_rgb_150ppi.jpg" style="width:200px"/>
+<img src="https://www.agh.edu.pl/home/ckim/multimedia/znak_graficzny/znak_nazwa_symetr/agh_nzw_s_pl_1w_wbr_rgb_150ppi.jpg"/>
 <h2> Sklep Internetowy </h2>
 <h3>Przyczyna</h3> Projektujemy oprogramowanie sklepu internetowego na ćwiczenia z Projektowania Oprogramowania.
 <h3>Kompilator</h3> Wykorzystamy do kodowania program <b>Visual Studio 2019</b>, który został nam udostępniony przez naszą uczelnię <b><mark>AGH</mark></b> (niestety nie chce ona nam zapewnić wtyczki <mark>.NET</mark>), a także, we własnym zakresie <b>Visual Studio 2022</b>.
