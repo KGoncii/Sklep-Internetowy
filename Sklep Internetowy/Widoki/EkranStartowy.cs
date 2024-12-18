@@ -22,6 +22,7 @@ public class EkranStartowy
     }
     public void Wyswietl()
     {
+        Console.Clear();
         Console.WriteLine($"1.Rejestracja");
         Console.WriteLine($"2.Logowanie");
         Console.WriteLine($"3.Przeglądaj produkty");
@@ -62,7 +63,28 @@ public class EkranStartowy
             case 6:
                 if (Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2)
                 {
+                    Console.Clear();
                     Console.WriteLine("Zarządzanie produktami...");
+                    Console.WriteLine("Podaj nazwę produktu:");
+                    string nazwa = Console.ReadLine();
+                    Console.WriteLine("Podaj opis produktu:");
+                    string opis = Console.ReadLine();
+                    Console.WriteLine("Podaj ilość produktu:");
+                    int ilosc;
+                    while (!int.TryParse(Console.ReadLine(), out ilosc))
+                    {
+                        Console.WriteLine("Nieprawidłowa wartość. Podaj ilość produktu:");
+                    }
+                    Console.WriteLine("Podaj cenę produktu:");
+                    decimal cena;
+                    while (!decimal.TryParse(Console.ReadLine(), out cena))
+                    {
+                        Console.WriteLine("Nieprawidłowa wartość. Podaj cenę produktu:");
+                    }
+                    Console.WriteLine("Podaj kategorie produktu (oddzielone przecinkami):");
+                    string[] kategorie = Console.ReadLine().Split(',');
+
+                    magazyn.DodajProdukt(new Produkt(nazwa, opis, ilosc, cena, kategorie));
                     Console.WriteLine("Wciśnij ENTER żeby kontynuować");
                     Console.ReadLine();
                 }
