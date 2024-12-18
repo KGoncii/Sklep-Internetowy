@@ -4,7 +4,7 @@ using Sklep_Internetowy.Models;
 
 public class Magazyn
 {
-    private Dictionary<int, Produkt> produkty = new Dictionary<int, Produkt>();
+    public Dictionary<int, Produkt> produkty = new Dictionary<int, Produkt>();
 
     public Magazyn()
     {

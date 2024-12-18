@@ -29,7 +29,7 @@ public class EkranStartowy
         Console.WriteLine($"5.Zamknij");
         if (Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2)
         {
-            Console.WriteLine($"6. Zarządzaj produktami");
+            Console.WriteLine($"6.Zarządzaj produktami");
         }
     }
     public void WykonajAkcje(int wybor)
