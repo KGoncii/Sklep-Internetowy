@@ -5,10 +5,11 @@ using Sklep_Internetowy.Models;
 public class Magazyn
 {
     public Dictionary<int, Produkt> produkty = new Dictionary<int, Produkt>();
+    private const string filePath = "produkty.txt";
 
     public Magazyn()
     {
-        DodajPrzykladoweProdukty();
+        WczytajProduktyZPliku();
     }
 
     public void DodajProdukt(Produkt produkt)
@@ -17,6 +18,7 @@ public class Magazyn
         {
             produkty[produkt.Id] = produkt;
             Console.WriteLine($"Produkt {produkt.Nazwa} został dodany.");
+            ZapiszProduktyDoPliku();
         }
         else
         {
@@ -30,6 +32,7 @@ public class Magazyn
         {
             produkty.Remove(id);
             Console.WriteLine($"Produkt o ID {id} został usunięty.");
+            ZapiszProduktyDoPliku();
         }
         else
         {
@@ -56,6 +59,35 @@ public class Magazyn
         {
             DodajProdukt(produkt);
         }
+    }
+
+    private void WczytajProduktyZPliku()
+    {
+        if (File.Exists(filePath))
+        {
+            var lines = File.ReadAllLines(filePath);
+            foreach (var line in lines)
+            {
+                var parts = line.Split(';');
+                if (parts.Length == 6)
+                {
+                    var produkt = new Produkt(parts[1], parts[2], int.Parse(parts[3]), decimal.Parse(parts[4]), parts[5].Split(','));
+                    produkt.Id = int.Parse(parts[0]);
+                    produkty[produkt.Id] = produkt;
+                }
+            }
+        }
+    }
+
+    private void ZapiszProduktyDoPliku()
+    {
+        var lines = new List<string>();
+        foreach (var produkt in produkty.Values)
+        {
+            var line = $"{produkt.Id};{produkt.Nazwa};{produkt.Opis};{produkt.Ilosc};{produkt.Cena};{string.Join(",", produkt.Kategorie)}";
+            lines.Add(line);
+        }
+        File.WriteAllLines(filePath, lines);
     }
 
     public void DodajPrzykladoweProdukty()
