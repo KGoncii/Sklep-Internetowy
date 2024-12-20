@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using Sklep_Internetowy.Models;
 
 public class Magazyn
