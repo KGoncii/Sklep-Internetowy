@@ -3,21 +3,9 @@ class Program
 {
     static void Main()
     {
-        var zalogowanyUzytkownik = Sesja.ZalogowanyUzytkownik;
-
-        var ekranStartowy = new EkranStartowy(zalogowanyUzytkownik);
-
-        bool running = true;
-        while (running)
+        while (true)
         {
-            Console.Clear();
-            ekranStartowy.Wyswietl();
-            if (!int.TryParse(Console.ReadLine(), out int wybor))
-            {
-                Console.WriteLine("Nieprawidłowy wybór, spróbuj ponownie.");
-                continue;
-            }
-            ekranStartowy.WykonajAkcje(wybor);
+            var ekranStartowy = new EkranStartowy();
         }
     }
 }

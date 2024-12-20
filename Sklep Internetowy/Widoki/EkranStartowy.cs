@@ -1,59 +1,62 @@
 ﻿using Sklep_Internetowy.Models;
-
 public class EkranStartowy
 {
     int wybor;
     Magazyn magazyn = new Magazyn();
-    public EkranStartowy(Uzytkownik zalogowanyUzytkownik)
-    {
-        Sesja.ZalogowanyUzytkownik = zalogowanyUzytkownik;
 
+    public EkranStartowy()
+    {
         Console.WriteLine("=== Witaj w naszym sklepie internetowym ===\n");
 
         Console.WriteLine("Co chcesz zrobić?");
-
         Wyswietl();
-        while (!int.TryParse(Console.ReadLine(), out wybor) && (wybor < 1 && wybor > 7))
+
+        // Zakres wyboru dla użytkownika
+        int maxOpcji = Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2 ? 6 : 5;
+
+        while (!int.TryParse(Console.ReadLine(), out wybor) || wybor < 1 || wybor > maxOpcji)
         {
-            Console.WriteLine("Nieprawidłowa wartość. Wprowadź 1 dla Klienta lub 2 dla Admina.");
+            Console.WriteLine("Nieprawidłowa wartość. Spróbuj ponownie.");
         }
         Console.Clear();
         WykonajAkcje(wybor);
     }
+
+
     public void Wyswietl()
     {
-        Console.Clear();
-        Console.WriteLine($"1.Rejestracja");
-        Console.WriteLine($"2.Logowanie");
-        Console.WriteLine($"3.Przeglądaj produkty");
-        Console.WriteLine($"4.Wyloguj");
-        Console.WriteLine($"5.Zamknij");
+        Console.WriteLine($"1. Rejestracja");
+        Console.WriteLine($"2. Logowanie");
+        Console.WriteLine($"3. Przeglądaj produkty");
+        Console.WriteLine($"4. Wyloguj");
+        Console.WriteLine($"5. Zamknij");
+
         if (Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2)
         {
-            Console.WriteLine($"6.Zarządzaj produktami");
+            Console.WriteLine($"6. Zarządzaj produktami");
         }
     }
+
+
     public void WykonajAkcje(int wybor)
     {
         switch (wybor)
         {
             case 1:
-                Console.WriteLine("Rozpoczynanie rejestracji...");
-                Rejestracja rejestracja = new Rejestracja();
-                rejestracja.ZarejestrujUzytkownika();
+                Rejestracja();
                 break;
             case 2:
-                Console.WriteLine("Rozpoczynanie logowania...");
+                Logowanie();
                 break;
             case 3:
                 magazyn.WyswietlProdukty();
-                Console.WriteLine("Wciśnij ENTER żeby kontynuować");
+                Console.WriteLine("Wciśnij ENTER, aby kontynuować");
                 Console.ReadLine();
                 break;
             case 4:
-                Console.WriteLine("Wylogowywanie...");
                 Sesja.ZalogowanyUzytkownik = null;
-                Console.WriteLine("Wciśnij ENTER żeby kontynuować");
+                Console.WriteLine("Wylogowano.");
+                Console.WriteLine("Wciśnij ENTER, aby kontynuować");
                 Console.ReadLine();
                 break;
             case 5:
@@ -96,9 +99,52 @@ public class EkranStartowy
                 break;
             default:
                 Console.WriteLine("Nieznana opcja!");
-                Console.WriteLine("Wciśnij ENTER żeby kontynuować");
                 Console.ReadLine();
                 break;
         }
+    }
+
+    private void Rejestracja()
+    {
+        Console.WriteLine("=== Rejestracja ===");
+        Console.Write("Podaj login: ");
+        string login = Console.ReadLine();
+        Console.Write("Podaj hasło: ");
+        string haslo = Console.ReadLine();
+        Console.Write("Podaj rolę (1 - urzytkownik, 2 - admin): ");
+        int rola;
+        while (!int.TryParse(Console.ReadLine(), out rola))
+        {
+            Console.WriteLine("Nieprawidłowa wartość. Spróbuj ponownie.");
+        }
+
+        var uzytkownik = new Uzytkownik(login, haslo, rola); // Domyślnie rola = klient
+        UzytkownikManager.ZapiszUzytkownika(uzytkownik);
+
+        Console.WriteLine("Rejestracja zakończona sukcesem!");
+        Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+        Console.ReadLine();
+    }
+
+    private void Logowanie()
+    {
+        Console.WriteLine("=== Logowanie ===");
+        Console.Write("Podaj login: ");
+        string login = Console.ReadLine();
+        Console.Write("Podaj hasło: ");
+        string haslo = Console.ReadLine();
+
+        var uzytkownik = UzytkownikManager.Zaloguj(login, haslo);
+        if (uzytkownik != null)
+        {
+            Sesja.ZalogowanyUzytkownik = uzytkownik;
+            Console.WriteLine($"Zalogowano jako {uzytkownik.Login}");
+        }
+        else
+        {
+            Console.WriteLine("Nieprawidłowy login lub hasło.");
+        }
+        Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+        Console.ReadLine();
     }
 }

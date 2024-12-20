@@ -89,16 +89,4 @@ public class Magazyn
         }
         File.WriteAllLines(filePath, lines);
     }
-
-    public void DodajPrzykladoweProdukty()
-    {
-        var produktyPrzykladowe = new List<Produkt>
-        {
-            new Produkt("Produkt1", "Opis1", 10, 99.99m, new string[] { "Kategoria1" }),
-            new Produkt("Produkt2", "Opis2", 5, 199.99m, new string[] { "Kategoria2" }),
-            new Produkt("Produkt3", "Opis3", 20, 299.99m, new string[] { "Kategoria3" })
-        };
-
-        WczytajProdukty(produktyPrzykladowe);
-    }
 }
