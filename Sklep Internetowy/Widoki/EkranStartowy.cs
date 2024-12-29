@@ -1,4 +1,5 @@
 ﻿using Sklep_Internetowy.Models;
+
 public class EkranStartowy
 {
     int wybor;
@@ -12,7 +13,7 @@ public class EkranStartowy
         Wyswietl();
 
         // Zakres wyboru dla użytkownika
-        int maxOpcji = Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2 ? 6 : 5;
+        int maxOpcji = Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2 ? 9 : 8;
 
         while (!int.TryParse(Console.ReadLine(), out wybor) || wybor < 1 || wybor > maxOpcji)
         {
@@ -22,21 +23,22 @@ public class EkranStartowy
         WykonajAkcje(wybor);
     }
 
-
     public void Wyswietl()
     {
         Console.WriteLine($"1. Rejestracja");
         Console.WriteLine($"2. Logowanie");
         Console.WriteLine($"3. Przeglądaj produkty");
-        Console.WriteLine($"4. Wyloguj");
-        Console.WriteLine($"5. Zamknij");
+        Console.WriteLine($"4. Dodaj produkt do koszyka");
+        Console.WriteLine($"5. Wyświetl koszyk");
+        Console.WriteLine($"6. Finalizuj zakup");
+        Console.WriteLine($"7. Wyloguj");
+        Console.WriteLine($"8. Zamknij");
 
         if (Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2)
         {
-            Console.WriteLine($"6. Zarządzaj produktami");
+            Console.WriteLine($"9. Zarządzaj produktami");
         }
     }
-
 
     public void WykonajAkcje(int wybor)
     {
@@ -54,47 +56,33 @@ public class EkranStartowy
                 Console.ReadLine();
                 break;
             case 4:
+                DodajProduktDoKoszyka();
+                break;
+            case 5:
+                WyswietlKoszyk();
+                break;
+            case 6:
+                FinalizujZakup();
+                break;
+            case 7:
                 Sesja.ZalogowanyUzytkownik = null;
                 Console.WriteLine("Wylogowano.");
                 Console.WriteLine("Wciśnij ENTER, aby kontynuować");
                 Console.ReadLine();
                 break;
-            case 5:
+            case 8:
                 Console.WriteLine("Zamykanie aplikacji...");
                 Environment.Exit(0);
                 break;
-            case 6:
+            case 9:
                 if (Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Zarządzanie produktami...");
-                    Console.WriteLine("Podaj nazwę produktu:");
-                    string nazwa = Console.ReadLine();
-                    Console.WriteLine("Podaj opis produktu:");
-                    string opis = Console.ReadLine();
-                    Console.WriteLine("Podaj ilość produktu:");
-                    int ilosc;
-                    while (!int.TryParse(Console.ReadLine(), out ilosc))
-                    {
-                        Console.WriteLine("Nieprawidłowa wartość. Podaj ilość produktu:");
-                    }
-                    Console.WriteLine("Podaj cenę produktu:");
-                    decimal cena;
-                    while (!decimal.TryParse(Console.ReadLine(), out cena))
-                    {
-                        Console.WriteLine("Nieprawidłowa wartość. Podaj cenę produktu:");
-                    }
-                    Console.WriteLine("Podaj kategorie produktu (oddzielone przecinkami):");
-                    string[] kategorie = Console.ReadLine().Split(',');
-
-                    magazyn.DodajProdukt(new Produkt(nazwa, opis, ilosc, cena, kategorie));
-                    Console.WriteLine("Wciśnij ENTER żeby kontynuować");
-                    Console.ReadLine();
+                    ZarzadzajProduktami();
                 }
                 else
                 {
                     if (Sesja.ZalogowanyUzytkownik == null) Console.WriteLine("Nie jesteś zalogowany");
-                    else if (Sesja.ZalogowanyUzytkownik.Rola != 2) Console.WriteLine("Nie jesteś zalogowany");
+                    else if (Sesja.ZalogowanyUzytkownik.Rola != 2) Console.WriteLine("Nie masz uprawnień do zarządzania produktami");
                 }
                 break;
             default:
@@ -111,14 +99,14 @@ public class EkranStartowy
         string login = Console.ReadLine();
         Console.Write("Podaj hasło: ");
         string haslo = Console.ReadLine();
-        Console.Write("Podaj rolę (1 - urzytkownik, 2 - admin): ");
+        Console.Write("Podaj rolę (1 - użytkownik, 2 - admin): ");
         int rola;
         while (!int.TryParse(Console.ReadLine(), out rola))
         {
             Console.WriteLine("Nieprawidłowa wartość. Spróbuj ponownie.");
         }
 
-        var uzytkownik = new Uzytkownik(login, haslo, rola); // Domyślnie rola = klient
+        var uzytkownik = new Uzytkownik(login, haslo, rola);
         UzytkownikManager.ZapiszUzytkownika(uzytkownik);
 
         Console.WriteLine("Rejestracja zakończona sukcesem!");
@@ -145,6 +133,89 @@ public class EkranStartowy
             Console.WriteLine("Nieprawidłowy login lub hasło.");
         }
         Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+        Console.ReadLine();
+    }
+
+    private void DodajProduktDoKoszyka()
+    {
+        Console.WriteLine("=== Dodaj produkt do koszyka ===");
+        Console.Write("Podaj ID produktu: ");
+        int id;
+        while (!int.TryParse(Console.ReadLine(), out id) || !magazyn.produkty.ContainsKey(id))
+        {
+            Console.WriteLine("Nieprawidłowe ID produktu. Spróbuj ponownie.");
+        }
+
+        var produkt = magazyn.produkty[id];
+        Console.Write("Podaj ilość: ");
+        int ilosc;
+        while (!int.TryParse(Console.ReadLine(), out ilosc) || ilosc <= 0 || ilosc > produkt.Ilosc)
+        {
+            Console.WriteLine("Nieprawidłowa ilość. Spróbuj ponownie.");
+        }
+
+        Sesja.DodajProduktDoKoszyka(produkt, ilosc);
+
+        Console.WriteLine($"Produkt {produkt.Nazwa} został dodany do koszyka w ilości {ilosc} szt.");
+        Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+        Console.ReadLine();
+    }
+
+    private void WyswietlKoszyk()
+    {
+        Console.WriteLine("=== Twój koszyk ===");
+        Console.WriteLine(Sesja.KoszykUzytkownika.ToString());
+        Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+        Console.ReadLine();
+    }
+
+    private void FinalizujZakup()
+    {
+        try
+        {
+            foreach (var pozycja in Sesja.KoszykUzytkownika.PobierzPozycje())
+            {
+                var produkt = magazyn.produkty[pozycja.Produkt.Id];
+                produkt.Ilosc -= pozycja.Ilosc;
+            }
+
+            Sesja.FinalizujZakup();
+            magazyn.ZapiszProduktyDoPliku();
+            Console.WriteLine("Zakup został sfinalizowany.");
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+        Console.ReadLine();
+    }
+
+    private void ZarzadzajProduktami()
+    {
+        Console.Clear();
+        Console.WriteLine("Zarządzanie produktami...");
+        Console.WriteLine("Podaj nazwę produktu:");
+        string nazwa = Console.ReadLine();
+        Console.WriteLine("Podaj opis produktu:");
+        string opis = Console.ReadLine();
+        Console.WriteLine("Podaj ilość produktu:");
+        int ilosc;
+        while (!int.TryParse(Console.ReadLine(), out ilosc))
+        {
+            Console.WriteLine("Nieprawidłowa wartość. Podaj ilość produktu:");
+        }
+        Console.WriteLine("Podaj cenę produktu:");
+        decimal cena;
+        while (!decimal.TryParse(Console.ReadLine(), out cena))
+        {
+            Console.WriteLine("Nieprawidłowa wartość. Podaj cenę produktu:");
+        }
+        Console.WriteLine("Podaj kategorie produktu (oddzielone przecinkami):");
+        string[] kategorie = Console.ReadLine().Split(',');
+
+        magazyn.DodajProdukt(new Produkt(nazwa, opis, ilosc, cena, kategorie));
+        Console.WriteLine("Wciśnij ENTER żeby kontynuować");
         Console.ReadLine();
     }
 }

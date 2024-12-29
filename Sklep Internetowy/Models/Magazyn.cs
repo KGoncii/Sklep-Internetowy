@@ -79,7 +79,7 @@ public class Magazyn
         }
     }
 
-    private void ZapiszProduktyDoPliku()
+    public void ZapiszProduktyDoPliku()
     {
         var lines = new List<string>();
         foreach (var produkt in produkty.Values)
