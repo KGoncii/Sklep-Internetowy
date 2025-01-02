@@ -171,6 +171,26 @@ public class EkranStartowy
 
     private void FinalizujZakup()
     {
+        Console.WriteLine("=== Finalizacja zakupu ===");
+        Console.WriteLine("Wybierz metodę płatności:");
+        Console.WriteLine("1. PayPal");
+        Console.WriteLine("2. Karta Płatnicza");
+        Console.WriteLine("3. MasterCard");
+
+        int wyborMetody;
+        while (!int.TryParse(Console.ReadLine(), out wyborMetody) || wyborMetody < 1 || wyborMetody > 3)
+        {
+            Console.WriteLine("Nieprawidłowa wartość. Spróbuj ponownie.");
+        }
+
+        Platosc metodaPłatności = wyborMetody switch
+        {
+            1 => new PayPal(),
+            2 => new KartaPłatnicza(),
+            3 => new MasterCard(),
+            _ => throw new InvalidOperationException("Nieznana metoda płatności")
+        };
+
         try
         {
             foreach (var pozycja in Sesja.KoszykUzytkownika.PobierzPozycje())
@@ -179,6 +199,7 @@ public class EkranStartowy
                 produkt.Ilosc -= pozycja.Ilosc;
             }
 
+            metodaPłatności.Zaplac(Sesja.KoszykUzytkownika.ObliczCalkowitaCene());
             Sesja.FinalizujZakup();
             magazyn.ZapiszProduktyDoPliku();
             Console.WriteLine("Zakup został sfinalizowany.");
@@ -190,6 +211,7 @@ public class EkranStartowy
         Console.WriteLine("Wciśnij ENTER, aby kontynuować");
         Console.ReadLine();
     }
+
 
     private void ZarzadzajProduktami()
     {

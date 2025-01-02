@@ -4,7 +4,7 @@ namespace Sklep_Internetowy.Models
 {
     public class Produkt
     {
-        private static int Counter = 1;
+        public static int Counter = 1;
         public int Id { get; set; }
         public string Nazwa { get; set; }
         public string Opis { get; set; }
