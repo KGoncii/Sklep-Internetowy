@@ -77,7 +77,7 @@ public class EkranStartowy
             case 9:
                 if (Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2)
                 {
-                    ZarzadzajProduktami();
+                    ZarzadzanieProduktami();
                 }
                 else
                 {
@@ -212,11 +212,40 @@ public class EkranStartowy
         Console.ReadLine();
     }
 
+    private void ZarzadzanieProduktami()
+    {
+        Console.WriteLine($"1. Dodawanie produktu");
+        Console.WriteLine($"2. Usuwanie produktu");
 
-    private void ZarzadzajProduktami()
+        while (!int.TryParse(Console.ReadLine(), out wybor) || wybor < 1 || wybor > 2)
+        {
+            Console.WriteLine("Nieprawidłowa wartość. Spróbuj ponownie.");
+        }
+        Console.Clear();
+        WykonajAkcjeZarzadzania(wybor);
+    }
+
+    private void WykonajAkcjeZarzadzania(int wybor)
+    {
+        switch (wybor)
+        {
+            case 1:
+                DodawanieProduktow();
+                break;
+            case 2:
+                UsuwanieProduktow();
+                break;
+            default:
+                Console.WriteLine("Nieznana opcja!");
+                Console.ReadLine();
+                break;
+        }
+    }
+
+    private void DodawanieProduktow()
     {
         Console.Clear();
-        Console.WriteLine("Zarządzanie produktami...");
+        Console.WriteLine("Dodawanie produktów...");
         Console.WriteLine("Podaj nazwę produktu:");
         string nazwa = Console.ReadLine();
         Console.WriteLine("Podaj opis produktu:");
@@ -237,6 +266,21 @@ public class EkranStartowy
         string[] kategorie = Console.ReadLine().Split(',');
 
         magazyn.DodajProdukt(new Produkt(nazwa, opis, ilosc, cena, kategorie));
+        Console.WriteLine("Wciśnij ENTER żeby kontynuować");
+        Console.ReadLine();
+    }
+
+    private void UsuwanieProduktow()
+    {
+        Console.Clear();
+        Console.WriteLine("Usuwanie produktów...");
+        Console.WriteLine("Podaj ID produktu:");
+        int id;
+        while (!int.TryParse(Console.ReadLine(), out id) || !magazyn.produkty.ContainsKey(id))
+        {
+            Console.WriteLine("Nieprawidłowe ID produktu. Spróbuj ponownie.");
+        }
+        magazyn.UsunProdukt(id);
         Console.WriteLine("Wciśnij ENTER żeby kontynuować");
         Console.ReadLine();
     }
