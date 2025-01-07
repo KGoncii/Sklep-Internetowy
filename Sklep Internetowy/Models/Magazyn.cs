@@ -4,13 +4,31 @@ using Sklep_Internetowy.Models;
 
 public class Magazyn
 {
+    private static Magazyn instance;
+    private static readonly object lockObj = new object();
+
     public Dictionary<int, Produkt> produkty = new Dictionary<int, Produkt>();
     private const string filePath = "produkty.txt";
 
-    public Magazyn()
+    private Magazyn()
     {
         Produkt.Counter = 1; // Resetowanie licznika
         WczytajProduktyZPliku();
+    }
+    //Singleton - wzorzec projektowy, który zapewnia, że dana klasa ma tylko jedną instancję i zapewnia globalny punkt dostępu do tej instancji.
+    public static Magazyn Instance
+    {
+        get
+        {
+            lock (lockObj)
+            {
+                if (instance == null)
+                {
+                    instance = new Magazyn();
+                }
+                return instance;
+            }
+        }
     }
 
     public void DodajProdukt(Produkt produkt)
