@@ -8,7 +8,7 @@ public class MagazynTests
 
     public MagazynTests()
     {
-        magazyn = new Magazyn();
+        Magazyn magazyn = Magazyn.Instance;
         addedProducts = new List<Produkt>();
     }
 

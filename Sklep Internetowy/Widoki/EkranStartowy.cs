@@ -3,7 +3,7 @@
 public class EkranStartowy
 {
     int wybor;
-    Magazyn magazyn = new Magazyn();
+    Magazyn magazyn = Magazyn.Instance;
 
     public EkranStartowy()
     {
