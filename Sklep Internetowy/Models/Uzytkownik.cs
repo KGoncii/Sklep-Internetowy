@@ -13,11 +13,6 @@
             Rola = rola;
         }
 
-        public override string ToString()
-        {
-            return $"{Login}|{Haslo}|{Rola}";
-        }
-
         public static Uzytkownik FromString(string line)
         {
             var parts = line.Split('|');

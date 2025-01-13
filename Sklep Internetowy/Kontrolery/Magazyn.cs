@@ -13,9 +13,9 @@ public class Magazyn
     private Magazyn()
     {
         Produkt.Counter = 1; // Resetowanie licznika
-        WczytajProduktyZPliku();
+        WczytajProduktyZPliku(); // Wczytanie produktów z pliku przy inicjalizacji
     }
-    //Singleton - wzorzec projektowy, który zapewnia, że dana klasa ma tylko jedną instancję i zapewnia globalny punkt dostępu do tej instancji.
+    // Singleton - wzorzec projektowy, który zapewnia, że dana klasa ma tylko jedną instancję i zapewnia globalny punkt dostępu do tej instancji.
     public static Magazyn Instance
     {
         get
@@ -24,7 +24,7 @@ public class Magazyn
             {
                 if (instance == null)
                 {
-                    instance = new Magazyn();
+                    instance = new Magazyn(); // Tworzenie instancji, jeśli jeszcze nie istnieje
                 }
                 return instance;
             }
@@ -35,9 +35,9 @@ public class Magazyn
     {
         if (!produkty.ContainsKey(produkt.Id))
         {
-            produkty[produkt.Id] = produkt;
+            produkty[produkt.Id] = produkt; // Dodanie produktu do słownika
             Console.WriteLine($"Produkt {produkt.Nazwa} został dodany.");
-            ZapiszProduktyDoPliku();
+            ZapiszProduktyDoPliku(); // Zapisanie produktów do pliku po dodaniu nowego
         }
         else
         {
@@ -49,9 +49,9 @@ public class Magazyn
     {
         if (produkty.ContainsKey(id))
         {
-            produkty.Remove(id);
+            produkty.Remove(id); // Usunięcie produktu ze słownika
             Console.WriteLine($"Produkt o ID {id} został usunięty.");
-            ZapiszProduktyDoPliku();
+            ZapiszProduktyDoPliku(); // Zapisanie produktów do pliku po usunięciu
         }
         else
         {
@@ -76,7 +76,7 @@ public class Magazyn
     {
         if (File.Exists(filePath))
         {
-            var lines = File.ReadAllLines(filePath);
+            var lines = File.ReadAllLines(filePath); // Odczytanie wszystkich linii z pliku
             foreach (var line in lines)
             {
                 var parts = line.Split(';');
@@ -84,7 +84,7 @@ public class Magazyn
                 {
                     var produkt = new Produkt(parts[1], parts[2], int.Parse(parts[3]), decimal.Parse(parts[4]), parts[5].Split(','));
                     produkt.Id = int.Parse(parts[0]);
-                    produkty[produkt.Id] = produkt;
+                    produkty[produkt.Id] = produkt; // Dodanie produktu do słownika
                 }
             }
         }
@@ -96,8 +96,8 @@ public class Magazyn
         foreach (var produkt in produkty.Values)
         {
             var line = $"{produkt.Id};{produkt.Nazwa};{produkt.Opis};{produkt.Ilosc};{produkt.Cena};{string.Join(",", produkt.Kategorie)}";
-            lines.Add(line);
+            lines.Add(line); // Dodanie linii reprezentującej produkt do listy
         }
-        File.WriteAllLines(filePath, lines);
+        File.WriteAllLines(filePath, lines); // Zapisanie wszystkich linii do pliku
     }
 }

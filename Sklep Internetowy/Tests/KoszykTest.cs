@@ -7,19 +7,20 @@ public class KoszykTests : IDisposable
 
     public KoszykTests()
     {
+        // Inicjalizacja nowego koszyka przed każdym testem
         koszyk = new Koszyk();
     }
 
     [Fact]
     public void DodajProdukt_NowyProdukt_DodajeDoKoszyka()
     {
-        // Arrange
+        // Arrange - przygotowanie danych testowych
         var produkt = new Produkt("Produkt1", "Opis1", 10, 100m, new string[] { "Kategoria1" });
 
-        // Act
+        // Act - dodanie produktu do koszyka
         koszyk.DodajProdukt(produkt, 2);
 
-        // Assert
+        // Assert - sprawdzenie, czy produkt został dodany do koszyka
         var pozycje = koszyk.PobierzPozycje().ToList();
         Assert.Single(pozycje);
         Assert.Equal(produkt, pozycje[0].Produkt);
@@ -29,14 +30,14 @@ public class KoszykTests : IDisposable
     [Fact]
     public void DodajProdukt_IstniejacyProdukt_ZwiekszaIlosc()
     {
-        // Arrange
+        // Arrange - przygotowanie danych testowych
         var produkt = new Produkt("Produkt1", "Opis1", 10, 100m, new string[] { "Kategoria1" });
         koszyk.DodajProdukt(produkt, 2);
 
-        // Act
+        // Act - dodanie tego samego produktu do koszyka
         koszyk.DodajProdukt(produkt, 3);
 
-        // Assert
+        // Assert - sprawdzenie, czy ilość produktu w koszyku została zwiększona
         var pozycje = koszyk.PobierzPozycje().ToList();
         Assert.Single(pozycje);
         Assert.Equal(produkt, pozycje[0].Produkt);
@@ -46,16 +47,16 @@ public class KoszykTests : IDisposable
     [Fact]
     public void PobierzPozycje_ZwracaWszystkiePozycje()
     {
-        // Arrange
+        // Arrange - przygotowanie danych testowych
         var produkt1 = new Produkt("Produkt1", "Opis1", 10, 100m, new string[] { "Kategoria1" });
         var produkt2 = new Produkt("Produkt2", "Opis2", 5, 200m, new string[] { "Kategoria2" });
         koszyk.DodajProdukt(produkt1, 2);
         koszyk.DodajProdukt(produkt2, 3);
 
-        // Act
+        // Act - pobranie wszystkich pozycji z koszyka
         var pozycje = koszyk.PobierzPozycje().ToList();
 
-        // Assert
+        // Assert - sprawdzenie, czy wszystkie pozycje zostały poprawnie pobrane
         Assert.Equal(2, pozycje.Count);
         Assert.Contains(pozycje, p => p.Produkt == produkt1 && p.Ilosc == 2);
         Assert.Contains(pozycje, p => p.Produkt == produkt2 && p.Ilosc == 3);
@@ -64,32 +65,32 @@ public class KoszykTests : IDisposable
     [Fact]
     public void ObliczCalkowitaCene_ZwracaPoprawnaCene()
     {
-        // Arrange
+        // Arrange - przygotowanie danych testowych
         var produkt1 = new Produkt("Produkt1", "Opis1", 10, 100m, new string[] { "Kategoria1" });
         var produkt2 = new Produkt("Produkt2", "Opis2", 5, 200m, new string[] { "Kategoria2" });
         koszyk.DodajProdukt(produkt1, 2);
         koszyk.DodajProdukt(produkt2, 3);
 
-        // Act
+        // Act - obliczenie całkowitej ceny koszyka
         var calkowitaCena = koszyk.ObliczCalkowitaCene();
 
-        // Assert
+        // Assert - sprawdzenie, czy całkowita cena jest poprawna
         Assert.Equal(800m, calkowitaCena);
     }
 
     [Fact]
     public void ToString_ZwracaPoprawnyFormat()
     {
-        // Arrange
+        // Arrange - przygotowanie danych testowych
         var produkt1 = new Produkt("Produkt1", "Opis1", 10, 100m, new string[] { "Kategoria1" });
         var produkt2 = new Produkt("Produkt2", "Opis2", 5, 200m, new string[] { "Kategoria2" });
         koszyk.DodajProdukt(produkt1, 2);
         koszyk.DodajProdukt(produkt2, 3);
 
-        // Act
+        // Act - pobranie reprezentacji tekstowej koszyka
         var koszykString = koszyk.ToString();
 
-        // Assert
+        // Assert - sprawdzenie, czy reprezentacja tekstowa jest poprawna
         var expectedString = "Produkt1 - 2 szt. - 100,00 zł za szt.\r\nProdukt2 - 3 szt. - 200,00 zł za szt.\r\nRazem: 800,00 zł\r\n";
         Assert.Equal(expectedString, koszykString);
     }

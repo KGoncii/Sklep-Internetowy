@@ -12,17 +12,13 @@ namespace Sklep_Internetowy.Models
             Produkt = produkt;
             Ilosc = ilosc;
         }
-
-        public override string ToString()
-        {
-            return $"{Produkt.Nazwa} - {Ilosc} szt. - {Produkt.Cena:C} za szt.";
-        }
     }
 
     public class Koszyk
     {
         private List<PozycjaKoszyka> pozycje = new List<PozycjaKoszyka>();
 
+        // Dodaje produkt do koszyka
         public void DodajProdukt(Produkt produkt, int ilosc)
         {
             var pozycja = pozycje.FirstOrDefault(p => p.Produkt.Id == produkt.Id);
@@ -36,16 +32,19 @@ namespace Sklep_Internetowy.Models
             }
         }
 
+        // Pobiera wszystkie pozycje z koszyka
         public IEnumerable<PozycjaKoszyka> PobierzPozycje()
         {
             return pozycje;
         }
 
+        // Oblicza całkowitą cenę koszyka
         public decimal ObliczCalkowitaCene()
         {
             return pozycje.Sum(p => p.Produkt.Cena * p.Ilosc);
         }
 
+        // Zwraca tekstową reprezentację koszyka
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -58,6 +57,8 @@ namespace Sklep_Internetowy.Models
         }
 
         Magazyn magazyn = Magazyn.Instance;
+
+        // Dodaje produkt do koszyka z interfejsem użytkownika
         public void DodajProduktDoKoszyka()
         {
             Console.WriteLine("=== Dodaj produkt do koszyka ===");
@@ -81,12 +82,14 @@ namespace Sklep_Internetowy.Models
             Console.WriteLine($"Produkt {produkt.Nazwa} został dodany do koszyka w ilości {ilosc} szt.");
         }
 
+        // Wyświetla zawartość koszyka
         public void WyswietlKoszyk()
         {
             Console.WriteLine("=== Twój koszyk ===");
             Console.WriteLine(Sesja.KoszykUzytkownika.ToString());
         }
 
+        // Finalizuje zakup
         public void FinalizujZakup()
         {
             Console.WriteLine("=== Finalizacja zakupu ===");

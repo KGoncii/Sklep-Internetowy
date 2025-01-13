@@ -15,6 +15,7 @@ public class EkranStartowy
         // Zakres wyboru dla użytkownika
         int maxOpcji = Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2 ? 9 : 8;
 
+        // Pętla do momentu, aż użytkownik poda prawidłową wartość
         while (!int.TryParse(Console.ReadLine(), out wybor) || wybor < 1 || wybor > maxOpcji)
         {
             Console.WriteLine("Nieprawidłowa wartość. Spróbuj ponownie.");
@@ -34,6 +35,7 @@ public class EkranStartowy
         Console.WriteLine($"7. Wyloguj");
         Console.WriteLine($"8. Zamknij");
 
+        // Opcja zarządzania produktami dostępna tylko dla użytkowników z rolą 2 (administratorzy)
         if (Sesja.ZalogowanyUzytkownik != null && Sesja.ZalogowanyUzytkownik.Rola == 2)
         {
             Console.WriteLine($"9. Zarządzaj produktami");
