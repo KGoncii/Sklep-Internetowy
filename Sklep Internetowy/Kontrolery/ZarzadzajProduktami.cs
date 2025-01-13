@@ -63,8 +63,6 @@ public class ZarzadzanieProduktami
 
         // Dodanie produktu do magazynu
         magazyn.DodajProdukt(new Produkt(nazwa, opis, ilosc, cena, kategorie));
-        Console.WriteLine("Wciśnij ENTER żeby kontynuować");
-        Console.ReadLine();
     }
 
     private void UsuwanieProduktow()
@@ -80,7 +78,5 @@ public class ZarzadzanieProduktami
         }
         // Usunięcie produktu z magazynu
         magazyn.UsunProdukt(id);
-        Console.WriteLine("Wciśnij ENTER żeby kontynuować");
-        Console.ReadLine();
     }
 }

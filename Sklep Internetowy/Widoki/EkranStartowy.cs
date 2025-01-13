@@ -103,6 +103,9 @@ public class EkranStartowy
                     if (Sesja.ZalogowanyUzytkownik == null) Console.WriteLine("Nie jesteś zalogowany");
                     else if (Sesja.ZalogowanyUzytkownik.Rola != 2) Console.WriteLine("Nie masz uprawnień do zarządzania produktami");
                 }
+                Console.WriteLine("Wciśnij ENTER żeby kontynuować");
+                Console.ReadLine();
+                Console.Clear();
                 break;
             default:
                 Console.WriteLine("Nieznana opcja!");

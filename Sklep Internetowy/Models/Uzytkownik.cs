@@ -18,5 +18,9 @@
             var parts = line.Split('|');
             return new Uzytkownik(parts[0], parts[1], int.Parse(parts[2]));
         }
+        public override string ToString()
+        {
+            return $"{Login}|{Haslo}|{Rola}";
+        }
     }
 }
