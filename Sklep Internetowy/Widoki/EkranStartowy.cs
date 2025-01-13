@@ -46,29 +46,46 @@ public class EkranStartowy
         {
             case 1:
                 new Rejestracja().Wykonaj();
+                Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+                Console.ReadLine();
+                Console.Clear();
                 break;
             case 2:
                 new Logowanie().Wykonaj();
+                Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+                Console.ReadLine();
+                Console.Clear();
                 break;
             case 3:
                 magazyn.WyswietlProdukty();
                 Console.WriteLine("Wciśnij ENTER, aby kontynuować");
                 Console.ReadLine();
+                Console.Clear();
                 break;
             case 4:
                 new Koszyk().DodajProduktDoKoszyka();
+                Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+                Console.ReadLine();
+                Console.Clear();
                 break;
             case 5:
                 new Koszyk().WyswietlKoszyk();
+                Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+                Console.ReadLine();
+                Console.Clear();
                 break;
             case 6:
                 new Koszyk().FinalizujZakup();
+                Console.WriteLine("Wciśnij ENTER, aby kontynuować");
+                Console.ReadLine();
+                Console.Clear();
                 break;
             case 7:
                 Sesja.ZalogowanyUzytkownik = null;
                 Console.WriteLine("Wylogowano.");
                 Console.WriteLine("Wciśnij ENTER, aby kontynuować");
                 Console.ReadLine();
+                Console.Clear();
                 break;
             case 8:
                 Console.WriteLine("Zamykanie aplikacji...");

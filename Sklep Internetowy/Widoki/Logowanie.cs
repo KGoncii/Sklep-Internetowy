@@ -21,7 +21,5 @@ public class Logowanie
         {
             Console.WriteLine("Nieprawidłowy login lub hasło.");
         }
-        Console.WriteLine("Wciśnij ENTER, aby kontynuować");
-        Console.ReadLine();
     }
 }

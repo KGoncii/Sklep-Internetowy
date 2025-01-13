@@ -79,16 +79,12 @@ namespace Sklep_Internetowy.Models
             Sesja.DodajProduktDoKoszyka(produkt, ilosc);
 
             Console.WriteLine($"Produkt {produkt.Nazwa} został dodany do koszyka w ilości {ilosc} szt.");
-            Console.WriteLine("Wciśnij ENTER, aby kontynuować");
-            Console.ReadLine();
         }
 
         public void WyswietlKoszyk()
         {
             Console.WriteLine("=== Twój koszyk ===");
             Console.WriteLine(Sesja.KoszykUzytkownika.ToString());
-            Console.WriteLine("Wciśnij ENTER, aby kontynuować");
-            Console.ReadLine();
         }
 
         public void FinalizujZakup()
@@ -105,7 +101,7 @@ namespace Sklep_Internetowy.Models
                 Console.WriteLine("Nieprawidłowa wartość. Spróbuj ponownie.");
             }
 
-            Platosc metodaPłatności = wyborMetody switch
+            Platnosc metodaPłatności = wyborMetody switch
             {
                 1 => new PayPal(),
                 2 => new KartaPłatnicza(),
@@ -130,8 +126,6 @@ namespace Sklep_Internetowy.Models
             {
                 Console.WriteLine(ex.Message);
             }
-            Console.WriteLine("Wciśnij ENTER, aby kontynuować");
-            Console.ReadLine();
         }
     }
 }

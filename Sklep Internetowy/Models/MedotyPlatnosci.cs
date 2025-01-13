@@ -1,4 +1,4 @@
-﻿public class PayPal : Platosc
+﻿public class PayPal : Platnosc
 {
     public void Zaplac(decimal kwota)
     {
@@ -6,7 +6,7 @@
     }
 }
 
-public class KartaPłatnicza : Platosc
+public class KartaPłatnicza : Platnosc
 {
     public void Zaplac(decimal kwota)
     {
@@ -14,7 +14,7 @@ public class KartaPłatnicza : Platosc
     }
 }
 
-public class MasterCard : Platosc
+public class MasterCard : Platnosc
 {
     public void Zaplac(decimal kwota)
     {

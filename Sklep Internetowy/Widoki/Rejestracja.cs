@@ -21,7 +21,5 @@ public class Rejestracja
         UzytkownikManager.ZapiszUzytkownika(uzytkownik);
 
         Console.WriteLine("Rejestracja zakończona sukcesem!");
-        Console.WriteLine("Wciśnij ENTER, aby kontynuować");
-        Console.ReadLine();
     }
 }

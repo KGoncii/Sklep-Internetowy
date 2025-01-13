@@ -1,4 +1,4 @@
-﻿public interface Platosc
+﻿public interface Platnosc
 {
     void Zaplac(decimal kwota);
 }
