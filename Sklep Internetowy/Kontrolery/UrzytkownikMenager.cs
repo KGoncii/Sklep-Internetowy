@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Sklep_Internetowy.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Sklep_Internetowy.Models
+namespace Sklep_Internetowy.Kontrolery
 {
     public static class UzytkownikManager
     {

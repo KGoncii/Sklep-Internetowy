@@ -72,14 +72,6 @@ public class Magazyn
         }
     }
 
-    public void WczytajProdukty(List<Produkt> listaProduktow)
-    {
-        foreach (var produkt in listaProduktow)
-        {
-            DodajProdukt(produkt);
-        }
-    }
-
     private void WczytajProduktyZPliku()
     {
         if (File.Exists(filePath))
@@ -107,19 +99,5 @@ public class Magazyn
             lines.Add(line);
         }
         File.WriteAllLines(filePath, lines);
-    }
-
-    public void KupProdukt(int id, Platosc metodaPłatności)
-    {
-        if (produkty.ContainsKey(id))
-        {
-            var produkt = produkty[id];
-            metodaPłatności.Zaplac(produkt.Cena);
-            Console.WriteLine($"Produkt {produkt.Nazwa} został zakupiony.");
-        }
-        else
-        {
-            Console.WriteLine($"Produkt o ID {id} nie istnieje.");
-        }
     }
 }
